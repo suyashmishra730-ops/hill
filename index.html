@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hillman</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              serif: ['Playfair Display', 'serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+            },
+            colors: {
+              brand: {
+                green: '#00ffa3',  // Vibrant Cyber Green
+                dark: '#050505',   // Deep Black Background
+                card: '#0A0A0A',   // Dark Card
+                text: '#FAFAFA',   // Light Text
+              }
+            },
+            backgroundImage: {
+              'grid-pattern': "radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px)",
+            },
+            animation: {
+              'marquee': 'marquee 30s linear infinite',
+              'fade-in-up-blur': 'fade-in-up-blur 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both',
+              'border-beam': 'border-beam calc(var(--duration)*1s) infinite linear',
+            },
+            keyframes: {
+              marquee: {
+                '0%': { transform: 'translateX(0)' },
+                '100%': { transform: 'translateX(-50%)' },
+              },
+              'fade-in-up-blur': {
+                '0%': { 
+                  opacity: '0', 
+                  transform: 'translateY(40px)', 
+                  filter: 'blur(10px)' 
+                },
+                '100%': { 
+                  opacity: '1', 
+                  transform: 'translateY(0)', 
+                  filter: 'blur(0)' 
+                },
+              },
+              'border-beam': {
+                '100%': {
+                  'offset-distance': '100%',
+                },
+              },
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        background-color: #050505;
+        color: #FAFAFA;
+        overflow-x: hidden;
+      }
+      /* Custom scrollbar to keep it sleek */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #050505;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #333;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+
+      /* --- NEW ANIMATIONS FOR FEATURES+ SECTION --- */
+
+      /* 1. Flashlight Effect - Refined for per-card usage */
+      .flashlight-card, .flashlight-card-performer {
+        --x: 50%;
+        --y: 50%;
+        position: relative;
+        overflow: hidden;
+      }
+      .flashlight-overlay {
+        background: radial-gradient(
+          400px circle at var(--x) var(--y),
+          rgba(0, 255, 163, 0.1),
+          transparent 60%
+        );
+        z-index: 10;
+        pointer-events: none;
+        mix-blend-mode: soft-light;
+      }
+      .flashlight-border {
+        background: radial-gradient(
+          300px circle at var(--x) var(--y),
+          rgba(0, 255, 163, 0.4),
+          transparent 40%
+        );
+        z-index: 20;
+        pointer-events: none;
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        padding: 1px; /* The border width */
+      }
+
+      /* 2. Vertical Text Reveal (Letter by Letter) */
+      .char-reveal {
+        display: inline-block;
+        overflow: hidden;
+        vertical-align: bottom;
+      }
+      .char-reveal span {
+        display: inline-block;
+        transform: translateY(110%);
+        transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+      .active .char-reveal span {
+        transform: translateY(0%);
+      }
+
+      /* 3. Progressive Blur Mask for Glass Cards */
+      .mask-image-gradient-to-t {
+        mask-image: linear-gradient(to top, black 0%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to top, black 0%, transparent 100%);
+      }
+
+      /* 4. Border Beam */
+      @keyframes beam-travel {
+        0%, 100% { left: -50%; width: 0%; opacity: 0; }
+        50% { width: 50%; opacity: 1; }
+        100% { left: 100%; width: 0%; opacity: 0; }
+      }
+      
+      .pill-beam {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      .pill-beam::after {
+        content: '';
+        position: absolute;
+        height: 100%;
+        width: 40%;
+        background: linear-gradient(90deg, transparent, #00ffa3, transparent);
+        opacity: 0.5;
+        filter: blur(5px);
+        transform: skewX(-20deg);
+        animation: beam-travel 2.5s ease-in-out infinite;
+      }
+
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
